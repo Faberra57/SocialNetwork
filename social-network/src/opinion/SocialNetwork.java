@@ -40,7 +40,6 @@ public class SocialNetwork implements ISocialNetwork {
 		}
 	}
 
-	@Override
 	public int countNbMembers() {
 		
 		return members.size();

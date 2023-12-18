@@ -14,7 +14,7 @@ public class Member {
 	public String getLogin() {
 		return login;
 	}
-	public String getPassword() {
+	public Stringg getPassword() {
 		return password;
 	}
 	public String toString() {
