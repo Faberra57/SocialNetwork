@@ -1,2 +1,2 @@
 # SocialNetwork
-A project to create SocialNetwork with java language
+A project to create SocialNetwork with java language test
