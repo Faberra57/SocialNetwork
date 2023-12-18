@@ -145,7 +145,6 @@ public class SocialNetwork implements ISocialNetwork {
 				}
 		return total/nb ;
 	}
-	@Override
 	public LinkedList<String> consultItems(String title) throws BadEntryException {
 		LinkedList<String> s = new LinkedList<String>();
 		for (int b=0; b<books.size(); b++) {
