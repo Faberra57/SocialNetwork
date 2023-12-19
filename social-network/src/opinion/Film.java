@@ -19,4 +19,7 @@ public class Film extends Document{
 	public String toString() {
 		return super.toString()+", Directeur :"+this.director+", Scénariste :"+this.scenarist+", Durée :"+this.duration+", Genre :"+this.kind;
 	}
+	public boolean equals(Book book) {
+		return super.getTitle().equals(book.getTitle())&&this.author.equals(book.author)&&this.nbPages==book.nbPages&&this.kind.equals(book.kind);
+	}
 }
