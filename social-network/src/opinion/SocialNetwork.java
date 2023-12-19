@@ -215,19 +215,19 @@ public void addItemFilm(String login, String password, String title,String kind,
 		}
 		return result;
 	}
-public String toString() {
-	String chaine="Membres :";
-	for (int k=0;k<this.countNbMembers();k++) {
-		chaine+=this.members.get(k).toString()+", ";
-	}
-	chaine+="Livres :";
-	for (int k=0;k<this.countNbBooks();k++) {
-		chaine+=this.books.get(k).toString()+", ";
-	}
-	chaine+="Films :";
-	for (int k=0;k<this.countNbFilms();k++) {
-		chaine+=this.films.get(k).toString()+", ";
-	}
-	return chaine;
+	public String toString() {
+		String chaine="Membres :";
+		for (int k=0;k<this.countNbMembers();k++) {
+			chaine+=this.members.get(k).toString()+", ";
+		}
+		chaine+="Livres :";
+		for (int k=0;k<this.countNbBooks();k++) {
+			chaine+=this.books.get(k).toString()+", ";
+		}
+		chaine+="Films :";
+		for (int k=0;k<this.countNbFilms();k++) {
+			chaine+=this.films.get(k).toString()+", ";
+		}
+		return chaine;
 	}
 }
