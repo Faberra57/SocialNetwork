@@ -1,5 +1,4 @@
-package opinion;
-
+package classes;
 public class Member {
 	
 	private String login;
@@ -11,13 +10,20 @@ public class Member {
 		this.password=password;
 		this.description=description;
 	}
+	
+	public String toString() {
+		return "Utilisateur :"+login;
+	}
+	
 	public String getLogin() {
 		return login;
 	}
+	
 	public String getPassword() {
 		return password;
 	}
-	public String toString() {
-		return "Le nom de l'utilisateur est"+login+"et sa description est"+description;
+	
+	public boolean equals(Object o) {
+		return o instanceof Member && this.login.equals(((Member) o).login) && this.password.equals(((Member) o).password);
 	}
 }
