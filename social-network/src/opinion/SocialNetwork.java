@@ -35,32 +35,27 @@ public int countNbReviews() {
 	return reviews.size();
 }
 public Member checkMember(String login, String password) throws NotMemberException,BadEntryException{
-	if (!(login instanceof String) || login.isBlank()) {
+	if (login==null || login.isBlank()) {
 		throw new BadEntryException("Nom d'utilisateur incorrect");
 	}
-	if (!(password instanceof String) || password.strip().length()<4) {
+	if (password==null || password.strip().length()<4) {
 		throw new BadEntryException("Mot de passe incorrect");
 	}
-	int k=0;
-	int n=this.countNbMembers();
-	while (k<n && !(this.members.get(k).getLogin().equals(login) && this.members.get(k).getPassword().equals(password))) {
-		k++;
+	for (Member member : members) {
+		if (member.getLogin().equals(login.strip().toLowerCase()) && member.getPassword().equals(password.strip().toLowerCase())) {
+			return member;
+		}
 	}
-	if (k==n) {
-		throw new NotMemberException("");
-	}
-	else {
-		return this.members.get(k);
-	}
+	throw new NotMemberException("");
 }
 public void addMember(String login, String password, String description) throws BadEntryException, MemberAlreadyExistsException{
-	if (!(login instanceof String) || login.isBlank()) {
+	if (login==null || login.isBlank()) {
 		throw new BadEntryException("Nom d'utilisateur incorrect");
 	}
-	if (!(password instanceof String) || password.strip().length()<4) {
+	if (password==null || password.strip().length()<4) {
 		throw new BadEntryException("Mot de passe incorrect");
 	}
-	if (!(description instanceof String)) {
+	if (description==null) {
 		throw new BadEntryException("Description incorrecte");
 	}
 	String login_format=login.strip().toLowerCase();
@@ -73,22 +68,22 @@ public void addMember(String login, String password, String description) throws 
 }
 public void addItemFilm(String login, String password, String title,String kind, String director, String scenarist, int duration)
 		throws BadEntryException, NotMemberException,ItemFilmAlreadyExistsException{
-	Member creator=this.checkMember(login,password);
-	if (!(title instanceof String)) {
+	if (title==null || title.isBlank()) {
 		throw new BadEntryException("Titre incorrect");
 	}
-	if (!(kind instanceof String)) {
+	if (kind==null) {
 		throw new BadEntryException("Genre incorrect");
 	}
-	if (!(director instanceof String) || !(scenarist instanceof String)) {
+	if (director==null || scenarist==null) {
 		throw new BadEntryException("Nom incorrect");
 	}
 	if (duration<=0) {
 		throw new BadEntryException("Durée incorrecte");
 	}
+	Member creator=this.checkMember(login,password);
 	String title_format=title.strip().toLowerCase();
-	for (int k=0;k<this.countNbFilms();k++) {
-		if (this.films.get(k).getTitle().equals(title_format)) {
+	for (Film f : films) {
+		if (f.getTitle().equals(title_format)) {
 			throw new ItemFilmAlreadyExistsException();
 		}
 	}
@@ -96,22 +91,22 @@ public void addItemFilm(String login, String password, String title,String kind,
 }
 	public void addItemBook(String login, String password, String title, String kind, String author, int nbPages)
 			throws BadEntryException, NotMemberException, ItemBookAlreadyExistsException {
-		Member creator=this.checkMember(login,password);
-		if (!(title instanceof String)) {
+		if (title==null || title.isBlank()) {
 		throw new BadEntryException("Titre incorrect");
 	}
-	if (!(kind instanceof String)) {
+	if (kind==null) {
 		throw new BadEntryException("Genre incorrect");
 	}
-	if (!(author instanceof String)) {
+	if (author==null) {
 		throw new BadEntryException("Nom incorrect");
 	}
 	if (nbPages<=0) {
 		throw new BadEntryException("Nombre de page incorrect");
 	}
+	Member creator=this.checkMember(login,password);
 	String title_format=title.strip().toLowerCase();
-	for (int k=0;k<this.countNbBooks();k++) {
-		if (this.films.get(k).getTitle().equals(title_format)) {
+	for (Book b : books) {
+		if (b.getTitle().equals(title_format)) {
 			throw new ItemBookAlreadyExistsException();
 		}
 	}
@@ -121,19 +116,19 @@ public void addItemFilm(String login, String password, String title,String kind,
 	
 	public float reviewItemFilm(String login, String password, String title, float mark, String comment)
 			throws BadEntryException, NotMemberException, NotItemException {
-		Member creator=this.checkMember(login,password);
-		if (!(title instanceof String)) {
+		if (title==null) {
 		throw new BadEntryException("Titre incorrect");
 	}
 		if (mark<0.0 || mark>5.0) {
 			throw new BadEntryException("Note incorrecte");
 		}
-		if (!(comment instanceof String)) {
+		if (comment==null) {
 		throw new BadEntryException("Commentaire incorrect");
 	}
+		Member creator=this.checkMember(login,password);
 		int i=0;
 		int n=this.countNbFilms();
-		while (i<n && !title.equals(this.films.get(i).getTitle())) {
+		while (i<n && !title.strip().toLowerCase().equals(this.films.get(i).getTitle())) {
 			i++;
 		}
 		if (i==n) {
@@ -159,19 +154,19 @@ public void addItemFilm(String login, String password, String title,String kind,
 	}
 	public float reviewItemBook(String login, String password, String title, float mark, String comment)
 			throws BadEntryException, NotMemberException, NotItemException {
-		Member creator=this.checkMember(login,password);
-		if (!(title instanceof String)) {
+		if (title==null) {
 		throw new BadEntryException("Titre incorrect");
 	}
 		if (mark<0.0 || mark>5.0) {
 			throw new BadEntryException("Note incorrecte");
 		}
-		if (!(comment instanceof String)) {
+		if (comment==null) {
 		throw new BadEntryException("Commentaire incorrect");
 	}
+		Member creator=this.checkMember(login,password);
 		int i=0;
 		int n=this.countNbBooks();
-		while (i<n && !title.equals(this.books.get(i).getTitle())) {
+		while (i<n && !title.strip().toLowerCase().equals(this.books.get(i).getTitle())) {
 			i++;
 		}
 		if (i==n) {
@@ -196,38 +191,39 @@ public void addItemFilm(String login, String password, String title,String kind,
 		}
 	}
 	public LinkedList<String> consultItems(String title) throws BadEntryException {
-		if (!(title instanceof String)) {
+		if (title==null || title.isBlank()) {
 		throw new BadEntryException("Titre incorrect");
 	}
-		int n=title.length();
+		String title_format=title.strip().toLowerCase();
+		int n=title_format.length();
 		LinkedList<String> result=new LinkedList<String>();
 		for (int k=0;k<this.countNbBooks();k++) {
 			String chaine=this.books.get(k).getTitle();
-			if (chaine.substring(0,n).equals(title)) {
-				result.add(title);
+			if (chaine.substring(0,n).equals(title_format)) {
+				result.add(title_format);
 			}
 		}
 		for (int k=0;k<this.countNbFilms();k++) {
 			String chaine=this.films.get(k).getTitle();
-			if (chaine.substring(0,n).equals(title)) {
-				result.add(title);
+			if (chaine.substring(0,n).equals(title_format)) {
+				result.add(title_format);
 			}
 		}
 		return result;
 	}
-	public String toString() {
-		String chaine="Membres :";
-		for (int k=0;k<this.countNbMembers();k++) {
-			chaine+=this.members.get(k).toString()+", ";
-		}
-		chaine+="Livres :";
-		for (int k=0;k<this.countNbBooks();k++) {
-			chaine+=this.books.get(k).toString()+", ";
-		}
-		chaine+="Films :";
-		for (int k=0;k<this.countNbFilms();k++) {
-			chaine+=this.films.get(k).toString()+", ";
-		}
-		return chaine;
+public String toString() {
+	String chaine="Membres :";
+	for (int k=0;k<this.countNbMembers();k++) {
+		chaine+=this.members.get(k).toString()+", ";
 	}
+	chaine+="Livres :";
+	for (int k=0;k<this.countNbBooks();k++) {
+		chaine+=this.books.get(k).toString()+", ";
+	}
+	chaine+="Films :";
+	for (int k=0;k<this.countNbFilms();k++) {
+		chaine+=this.films.get(k).toString()+", ";
+	}
+	return chaine;
+}
 }
